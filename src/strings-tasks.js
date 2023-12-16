@@ -40,8 +40,10 @@ function getStringLength(value) {
  *   isString('test') => true
  *   isString(new String('test')) => true
  */
-function isString(/* value */) {
-  throw new Error('Not implemented');
+function isString(value) {
+  const regex = /^\[object (\S+?)\]$/;
+  const matches = Object.prototype.toString.call(value).match(regex) || [];
+  return (matches[1] || 'undefined').toLowerCase() === 'string';
 }
 
 /**
@@ -56,8 +58,8 @@ function isString(/* value */) {
  *   concatenateStrings('aa', '') => 'aa'.
  *   concatenateStrings('', 'bb') => 'bb'
  */
-function concatenateStrings(/* value1, value2 */) {
-  throw new Error('Not implemented');
+function concatenateStrings(value1, value2) {
+  return value1.concat(value2);
 }
 
 /**
@@ -71,8 +73,8 @@ function concatenateStrings(/* value1, value2 */) {
  *   getFirstChar('cat') => 'c'
  *   getFirstChar('') => ''
  */
-function getFirstChar(/* value */) {
-  throw new Error('Not implemented');
+function getFirstChar(value) {
+  return value.charAt(0);
 }
 
 /**
@@ -86,8 +88,8 @@ function getFirstChar(/* value */) {
  *   removeLeadingAndTrailingWhitespaces('cat ') => 'cat'
  *   removeLeadingAndTrailingWhitespaces('\t\t\tHello, World! ') => 'Hello, World!'
  */
-function removeLeadingAndTrailingWhitespaces(/* value */) {
-  throw new Error('Not implemented');
+function removeLeadingAndTrailingWhitespaces(value) {
+  return value.trim();
 }
 
 /**
@@ -101,8 +103,8 @@ function removeLeadingAndTrailingWhitespaces(/* value */) {
  *   removeLeadingWhitespaces('cat ') => 'cat '
  *   removeLeadingWhitespaces('\t\t\tHello, World! ') => 'Hello, World! '
  */
-function removeLeadingWhitespaces(/* value */) {
-  throw new Error('Not implemented');
+function removeLeadingWhitespaces(value) {
+  return value.trimStart();
 }
 
 /**
@@ -116,8 +118,8 @@ function removeLeadingWhitespaces(/* value */) {
  *   removeTrailingWhitespaces('cat ') => 'cat'
  *   removeTrailingWhitespaces('\t\t\tHello, World! ') => '\t\t\tHello, World!'
  */
-function removeTrailingWhitespaces(/* value */) {
-  throw new Error('Not implemented');
+function removeTrailingWhitespaces(value) {
+  return value.trimEnd();
 }
 
 /**
@@ -133,8 +135,11 @@ function removeTrailingWhitespaces(/* value */) {
  *   repeatString('', 3) => ''
  *   repeatString('abc', -2) => ''
  */
-function repeatString(/* str, times */) {
-  throw new Error('Not implemented');
+function repeatString(str, times) {
+  if (times >= 0) {
+    return str.repeat(times);
+  }
+  return '';
 }
 
 /**
@@ -149,8 +154,16 @@ function repeatString(/* str, times */) {
  *   removeFirstOccurrences('I like legends', 'end') => 'I like legs'.
  *   removeFirstOccurrences('ABABAB', 'BA') => 'ABAB'.
  */
-function removeFirstOccurrences(/* str, value */) {
-  throw new Error('Not implemented');
+function removeFirstOccurrences(str, value) {
+  const start = str.indexOf(value);
+  const strLength = value.length;
+  const end = start + strLength;
+  const str1 = str.slice(0, start);
+  const str2 = str.slice(end);
+  if (start >= 0) {
+    return str1 + str2;
+  }
+  return str;
 }
 
 /**
@@ -165,8 +178,16 @@ function removeFirstOccurrences(/* str, value */) {
  *   removeLastOccurrences('I like legends', 'end') => 'I like legs'.
  *   removeLastOccurrences('ABABAB', 'BA') => 'ABAB'.
  */
-function removeLastOccurrences(/* str, value */) {
-  throw new Error('Not implemented');
+function removeLastOccurrences(str, value) {
+  const start = str.lastIndexOf(value);
+  const strLength = value.length;
+  const end = start + strLength;
+  const str1 = str.slice(0, start);
+  const str2 = str.slice(end);
+  if (start >= 0) {
+    return str1 + str2;
+  }
+  return str;
 }
 
 /**
@@ -181,8 +202,19 @@ function removeLastOccurrences(/* str, value */) {
  *   sumOfCodes('') => 0
  *   sumOfCodes() => 0
  */
-function sumOfCodes(/* str */) {
-  throw new Error('Not implemented');
+function sumOfCodes(str) {
+  if (typeof str !== 'undefined') {
+    let sum = 0;
+    const arr = str.split('');
+    arr.forEach((letter) => {
+      sum += str.charCodeAt(arr.indexOf(letter));
+    });
+    return sum;
+  }
+  if (typeof str === 'undefined' || str === null) {
+    return 0;
+  }
+  return 0;
 }
 
 /**
